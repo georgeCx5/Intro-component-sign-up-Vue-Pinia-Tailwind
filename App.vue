@@ -36,10 +36,10 @@ export default {
         <div class=" relative flex flex-col gap-4 w-[327px] h-[442px] p-6 bg-white rounded-[10px]">
           <!-- Shadow -->
           <div class=" absolute left-0 -bottom-2 h-full w-full bg-gray-400 rounded-[10px] -z-50"></div>
-          <InputPick phText="First Name" />
-          <InputPick phText="Last Name" />
-          <InputPick phText="Email Address" typeText="email" />
-          <InputPick phText="Password" typeText="password" />
+          <InputPick phText="First Name" :sIndex="0" />
+          <InputPick phText="Last Name" :sIndex="1" />
+          <InputPick phText="Email Address" typeText="email" :sIndex="2" />
+          <InputPick phText="Password" typeText="password" :sIndex="3" />
           <div class=" flex flex-col gap-2">
             <button
               class=" relative h-14 bg-neo-green text-[15px] leading-[26px] tracking-[1px] font-semibold uppercase rounded-[5px]">

@@ -1,4 +1,7 @@
 <script>
+import { useDataStore } from '@/stores/DataStore';
+import { mapStores } from 'pinia'
+
 import IconError from '@/assets/images/icon-error.svg?component';
 export default {
    data() {
@@ -18,50 +21,43 @@ export default {
       typeText: {
          type: String,
          default: 'text'
+      },
+      sIndex: {
+         type: Number,
+         required: true,
       }
    },
    components: {
       IconError,
    },
+   computed: {
+      ...mapStores(useDataStore),
+   },
    methods: {
       checkInput() {
-         if (this.inputText <= 0) {
-            this.showWarning = true;
+         if (this.inputText.length <= 0) {
+            this.dataStore.stateArr[this.sIndex] = true;
          }
          if (this.typeText == 'email') {
-            this.showWarning = !this.emailRgx.test(this.inputText);
+            this.dataStore.stateArr[this.sIndex] = !this.emailRgx.test(this.inputText);
+            return;
          }
-         // else {
-         //    this.showWarning = false;
-         // }
-         if (this.inputText > 0) {
-            this.showWarning = false;
+         if (this.inputText.length > 0) {
+            this.dataStore.stateArr[this.sIndex] = false;
          }
       }
-   },
-   computed: {
-      showWarning() {
-         if (this.inputText <= 0) {
-            return true;
-         }
-         if (this.typeText == 'email') {
-            return !this.emailRgx.test(this.inputText);
-         }
-         if (this.inputText > 0) {
-            return false;
-         }
-      },
    }
 }
 </script>
 <template>
    <div class=" relative flex flex-col gap-[6px] h-[78px] text-neo-dark-blue">
-      <input class=" h-[56px] w-full px-5 outline outline-1 outline-neo-grayish-blue rounded-md" :type="typeText"
-         :placeholder="phText" maxlength="20" v-model="inputText">
-      <IconError v-show="showWarning" class=" absolute right-4 top-4" />
+      <input @blur="checkInput()" class=" h-[56px] w-full px-5 outline outline-1 outline-neo-grayish-blue rounded-md"
+         :type="typeText" :placeholder="phText" maxlength="20" v-model="inputText">
+      <IconError v-show="dataStore.stateArr[sIndex]" class=" absolute right-4 top-4" />
       <div>
-         <h4 v-show="showWarning" class=" self-end text-neo-red text-[11px] leading-[17px] font-medium italic">{{ redText
-         }}
+         <h4 v-show="dataStore.stateArr[sIndex]"
+            class=" self-end text-neo-red text-[11px] leading-[17px] font-medium italic">{{ redText
+            }}
          </h4>
       </div>
    </div>
