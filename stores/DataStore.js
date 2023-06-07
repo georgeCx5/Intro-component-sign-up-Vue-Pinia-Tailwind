@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+
 export const useDataStore = defineStore('data', {
    state: () => ({
       emailRgx: new RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
@@ -16,6 +17,7 @@ export const useDataStore = defineStore('data', {
          for (let i = 0; i < this.stateArr.length; i++) {
             if (this.stateArr[i] == true) {
                for (let j = 0; j < this.stateArr.length; j++) {
+                  // 2 porque es el index que tiene 'email' como tipo
                   j == 2 ? this.checkInput(j, 'email') : this.checkInput(j, 'text');
                }
                return;

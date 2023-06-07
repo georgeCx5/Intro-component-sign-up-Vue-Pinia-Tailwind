@@ -30,27 +30,27 @@ export default {
    },
    computed: {
       ...mapStores(useDataStore),
-      getBorder() {
+      getTextAndBorder() {
          return this.dataStore.showErrorArr[this.sIndex] ? 'outline-neo-red' : 'outline-neo-grayish-blue';
+      },
+      getGap() {
+         return this.dataStore.showErrorArr[this.sIndex] ? 'gap-[6px] text-neo-red' : '';
       }
    }
 }
 </script>
 <template>
-   <div class=" relative flex flex-col gap-[6px] h-[78px] text-neo-dark-blue">
-      <input @blur="dataStore.checkInput(sIndex, typeText)"
-         @keyup="dataStore.checkInputOnKey(sIndex)"
-         :class="` h-[56px] w-full px-5 outline outline-1 ${getBorder} rounded-md`" :type="typeText" :placeholder="phText"
-         maxlength="20" v-model="dataStore.inputTextArr[sIndex]">
+   <div :class="` relative flex ${getGap} flex-col text-neo-dark-blue`">
+      <input @blur="dataStore.checkInput(sIndex, typeText)" @keyup="dataStore.checkInputOnKey(sIndex)"
+         :class="` h-[56px] w-[279px] dsk:w-[460px] px-5 dsk:px-8 text-[14px] leading-[26px] tracking-[.25px] font-semibold outline outline-1 ${getTextAndBorder} rounded-md`"
+         :type="typeText" :placeholder="phText" maxlength="20" v-model="dataStore.inputTextArr[sIndex]">
       <IconError v-show="dataStore.showErrorArr[sIndex]" class=" absolute right-4 top-4" />
-      <div>
-         <h4 v-show="dataStore.showErrorArr[sIndex]"
-            class=" self-end text-neo-red text-[11px] leading-[17px] font-medium italic">
-            {{ redText }}
-         </h4>
-      </div>
-      StateArr: {{ dataStore.stateArr[sIndex] }}
+      <h4 v-show="dataStore.showErrorArr[sIndex]"
+         class=" dsk:self-end text-neo-red text-[11px] leading-[17px] font-medium italic">
+         {{ redText }}
+      </h4>
+      <!-- StateArr: {{ dataStore.stateArr[sIndex] }}
       <br>
-      ErrorArr: {{ dataStore.showErrorArr[sIndex] }}
+      ErrorArr: {{ dataStore.showErrorArr[sIndex] }} -->
    </div>
 </template>
