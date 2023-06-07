@@ -43,7 +43,7 @@ export default {
    <div :class="` relative flex ${getGap} flex-col text-neo-dark-blue`">
       <input @blur="dataStore.checkInput(sIndex, typeText)" @keyup="dataStore.checkInputOnKey(sIndex)"
          :class="` h-[56px] w-[279px] dsk:w-[460px] px-5 dsk:px-8 text-[14px] leading-[26px] tracking-[.25px] font-semibold outline outline-1 ${getTextAndBorder} rounded-md`"
-         :type="typeText" :placeholder="phText" maxlength="20" v-model="dataStore.inputTextArr[sIndex]">
+         :type="typeText" :placeholder="phText" maxlength="28" v-model="dataStore.inputTextArr[sIndex]">
       <IconError v-show="dataStore.showErrorArr[sIndex]" class=" absolute right-4 top-4" />
       <h4 v-show="dataStore.showErrorArr[sIndex]"
          class=" dsk:self-end text-neo-red text-[11px] leading-[17px] font-medium italic">
