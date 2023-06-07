@@ -1,4 +1,7 @@
 <script>
+import { useDataStore } from '@/stores/DataStore';
+import { mapStores } from 'pinia';
+
 import InputPick from './components/InputPick.vue';
 
 export default {
@@ -10,6 +13,9 @@ export default {
   },
   components: {
     InputPick,
+  },
+  computed: {
+    ...mapStores(useDataStore),
   }
 }
 </script>
@@ -30,7 +36,7 @@ export default {
           class=" relative h-[88px] px-[45px] bg-neo-blue text-[15px] leading-[26px] tracking-[.27px] rounded-[10px]">
           <div class=" absolute left-0 -bottom-2 h-full w-full bg-gray-400 rounded-[10px] -z-50"></div>
           <span class=" font-bold">
-            Try it free 7 days</span> then $20/mo. thereafter
+            Try it free 7 days</span> then $20/mo. thereafter {{ dataStore.inputTextArr }}
         </button>
         <!-- Form -->
         <div class=" relative flex flex-col gap-4 w-[327px] h-[442px] p-6 bg-white rounded-[10px]">
@@ -41,8 +47,8 @@ export default {
           <InputPick phText="Email Address" typeText="email" :sIndex="2" />
           <InputPick phText="Password" typeText="password" :sIndex="3" />
           <div class=" flex flex-col gap-2">
-            <button
-              class=" relative h-14 bg-neo-green text-[15px] leading-[26px] tracking-[1px] font-semibold uppercase rounded-[5px]">
+            <button @click="dataStore.checkForm()" type="submit"
+              class=" relative h-14 bg-neo-green hover:bg-opacity-75 text-[15px] leading-[26px] tracking-[1px] font-semibold uppercase rounded-[5px]">
               <div class=" absolute left-0 -bottom-2 w-full h-full bg-gray-400 rounded-[5px] -z-50"></div>Claim your
               free trial
             </button>
