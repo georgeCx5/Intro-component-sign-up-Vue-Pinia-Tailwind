@@ -1,92 +1,75 @@
 <script>
-import PlatformManager from './components/PlatformManager.vue';
-import dashboardImg from '@/assets/images/illustration-dashboard.png'
+import { useDataStore } from '@/stores/DataStore';
+import { mapStores } from 'pinia';
+
+import InputPick from './components/InputPick.vue';
 
 export default {
   data() {
     return {
-      rgxEmail: new RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
-      emailText: '',
-      dashboardImg,
-      logoImg: 'bg-[url("@/assets/images/logo.svg")]',
-      errorState: 'default',
+      bgMobile: 'bg-[url("@/assets/images/bg-intro-mobile.png")]',
+      bgDesktop: 'dsk:bg-[url("@/assets/images/bg-intro-desktop.png")]',
     }
   },
   components: {
-    PlatformManager,
-  },
-  methods: {
-    checkEmail() {
-      if (this.emailText.length <= 0) {
-        this.errorState = 'empty';
-        return;
-      }
-      if (this.rgxEmail.test(this.emailText)) {
-        this.errorState = 'default';
-        this.emailText = '';
-      } else {
-        this.errorState = 'error';
-      }
-    }
+    InputPick,
   },
   computed: {
-    getState() {
-      let inputBorder, inputGap, imageGap;
-      if (this.errorState == 'default') {
-        inputBorder = 'outline-neo-pale-blue';
-        inputGap = 'gap-[10px]';
-        imageGap = 'gap-[72px] dsk:gap-[82px]';
-      } else {
-        inputBorder = 'outline-neo-light-red';
-        inputGap = 'gap-[18px]';
-        imageGap = 'gap-[40px] dsk:gap-[64px]';
-      }
-      return { inputBorder, inputGap, imageGap };
-    }
+    ...mapStores(useDataStore),
   }
 }
 </script>
 <template>
-  <body class=" flex flex-col items-center gap-[120px] dsk:gap-[72px] font-franklin">
-    <main :class="` flex flex-col items-center ${getState.imageGap} mt-[85px] dsk:mt-[86px]`">
-      <div class=" flex flex-col items-center gap-[34px] dsk:gap-[42px]">
-        <div :class="` w-[56px] dsk:w-[90px] h-[17px] dsk:h-[28px] ${logoImg} bg-contain`"></div>
-        <div class=" flex flex-col items-center gap-[16px] dsk:gap-[18px]">
-          <h1 class=" text-[22px] dsk:text-[48px] leading-[32px] dsk:leading-[60px] text-neo-gray font-light">We are
-            launching
-            <span class=" text-neo-dark font-bold">soon!</span>
-          </h1>
-          <p class=" text-neo-dark text-[12px] dsk:text-[20px] leading-[15px] dsk:leading-[24px] font-light">Subscribe and
-            get notified</p>
-        </div>
-        <!-- Form -->
-        <div :class="` flex flex-col dsk:flex-row ${getState.inputGap} dsk:gap-4 w-[282px] dsk:w-full`">
-          <div class=" flex flex-col gap-[2px] dsk:gap-[6px]">
-            <input @keypress="errorState = 'default'"
-              :class="`w-full dsk:w-[421px] h-[40px] dsk:h-[56px] px-[32px] dsk:px-[30px] ${getState.inputBorder} text-neo-dark placeholder:text-neo-pale-blue text-[12px] dsk:text-[16px] leading-[20px] outline outline-1 rounded-[28px]`"
-              type="email" placeholder="Your email address..." v-model="emailText" maxlength="32">
-            <div
-              class=" dsk:px-[30px] text-neo-light-red text-center dsk:text-left text-[10px] dsk:text-[12px] leading-[20px] tracking-[.13px] italic">
-              <h5 v-show="errorState == 'empty'">Whoops! It looks like you forgot to add your email</h5>
-              <h5 v-show="errorState == 'error'">Please provide a valid email address</h5>
-            </div>
-          </div>
-          <button @click="checkEmail()"
-            class=" w-full dsk:w-[200px] h-[40px] dsk:h-[56px] bg-neo-blue text-white text-[12px] dsk:text-[16px] leading-[16px] dsk:leading-[19px] font-semibold rounded-[28px]"
-            type="submit">Notify Me</button>
+  <body class=" flex flex-col dsk:justify-center items-center dsk:h-screen bg-neo-red font-poppins">
+    <div class=" absolute h-full w-full" :class="`${bgMobile} ${bgDesktop}`"></div>
+    <main class=" relative flex flex-col dsk:flex-row dsk:items-center gap-16 dsk:gap-[45px] pt-[88px] pb-[68px] px-6 text-white">
+      <div class=" flex flex-col gap-6 w-[327px] dsk:w-[525px] text-center dsk:text-left">
+        <h1 class=" text-[28px] dsk:text-[50px] leading-9 dsk:leading-[55px] tracking-[-.29px] dsk:tracking-[-.52px] font-bold">Learn to code by watching others</h1>
+        <p class=" text-[16px] leading-[26px] font-medium">
+          See how experienced developers solve problems in real-time. Watching scripted tutorials is great,
+          but understanding how developers think is invaluable.
+        </p>
+      </div>
+      <div class=" relative flex flex-col gap-6">
+        <!-- Shadows -->
+        <div class=" absolute left-0 top-[7px] w-full h-[88px] dsk:h-[60px] bg-neutral-700 bg-opacity-25 rounded-[10px]"></div>
+        <div class=" absolute left-0 -bottom-[8px] w-full h-[442px] bg-neutral-700 bg-opacity-25 rounded-[10px]">
         </div>
         <!-- - -->
+        <div
+          class=" relative flex flex-col dsk:flex-row dsk:gap-1 justify-center items-center w-[327px] dsk:w-[540px] h-[88px] dsk:h-[60px] bg-neo-blue text-[15px] leading-[26px] tracking-[.27px] rounded-[10px]">
+          <h3>
+            <span class=" font-bold">
+              Try it free 7 days
+            </span>
+            then
+          </h3>
+          <h3>
+            $20/mo. thereafter
+          </h3>
+        </div>
+        <!-- Form -->
+        <div class=" relative flex flex-col gap-4 dsk:gap-5 w-[327px] dsk:w-[540px] p-6 dsk:p-10 bg-white rounded-[10px]">
+          <InputPick phText="First Name" :sIndex="0" />
+          <InputPick phText="Last Name" :sIndex="1" />
+          <InputPick phText="Email Address" typeText="email" :sIndex="2" />
+          <InputPick phText="Password" typeText="password" :sIndex="3" />
+          <div class=" relative flex flex-col gap-3">
+            <!-- Shadow -->
+            <div class=" absolute left-0 top-[4px] w-full h-[52px] bg-green-600 bg-opacity-90 rounded-[5px]"></div>
+            <!-- - -->
+            <button @click="dataStore.checkForm()" type="submit"
+              class=" relative h-[52px] bg-neo-green hover:brightness-[1.075] text-[15px] leading-[26px] tracking-[1px] font-semibold uppercase rounded-[5px]">
+              Claim your free trial
+            </button>
+            <h6 class=" px-4 text-neo-grayish-blue text-center text-[11px] leading-[21px] dsk:leading-[26px] font-medium">
+              By clicking the button, you are agreeing to our <a class=" text-neo-red font-bold" href="#"
+                target="_blank">Terms and
+                Services</a>
+            </h6>
+          </div>
+        </div>
       </div>
-      <img class=" w-[320px] dsk:w-[640px]" :src="dashboardImg" alt="dashboardImg">
     </main>
-    <footer class=" flex flex-col items-center gap-[27px] dsk:gap-[25px] mb-9 dsk:mb-12">
-      <div class=" flex gap-3">
-        <PlatformManager platform="facebook" />
-        <PlatformManager platform="twitter" />
-        <PlatformManager platform="instagram" />
-      </div>
-      <h3 class=" text-neo-gray text-[10px] dsk:text-[12px] leading-[12px] dsk:leading-[15px]">&copy; Copyright Ping. All
-        rights reserved.</h3>
-    </footer>
   </body>
 </template>
